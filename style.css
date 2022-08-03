@@ -169,6 +169,9 @@ p {
   background-color: darkred;
   color: white;
 }
+.btn-wrapper {
+  padding: 10px 0px;
+}
 .check-button {
   padding: 5px 0;
   width: 50%;
@@ -239,3 +242,7 @@ p {
 
 /* SECTION BOOKSHELF  */
 /* MAIN CONTENT  */
+
+.overflow {
+  overflow: hidden;
+}
