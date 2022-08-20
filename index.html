@@ -9,8 +9,8 @@
   </head>
 
   <body>
-    <header class="head_bar">
-      <h1 class="head_bar__title">Bookshelf Apps</h1>
+    <header>
+      <h1>Bookshelf Apps</h1>
     </header>
 
     <section class="input_section">
@@ -21,6 +21,7 @@
           <input
             id="inputBookTitle"
             type="text"
+            name="title"
             minlength="1"
             maxlength="32"
             required
@@ -31,6 +32,7 @@
           <input
             id="inputBookAuthor"
             type="text"
+            name="author"
             minlength="1"
             maxlength="32"
             required
@@ -42,13 +44,14 @@
             id="inputBookYear"
             oninput="this.value=this.value.slice(0,this.maxLength)"
             type="number"
+            name="year"
             maxlength="4"
             min="1900"
             max="2100"
             required
           />
         </div>
-        <div class="input_inline">
+        <div class="inputStatusBook">
           <label for="inputBookIsComplete">Completed Read</label>
           <input id="inputBookIsComplete" type="checkbox" />
         </div>
@@ -60,87 +63,62 @@
       <section class="search_section">
         <h2>Search a Book</h2>
         <form id="searchBook">
-          <input id="searchBookTitle" type="text" />
-          <button id="searchSubmit" type="submit">Search</button>
-          <button id="clearAll" type="submit">Reset</button>
+          <input id="searchBookTitle" type="text" name="search" />
+          <button class="btn-search" id="searchSubmit" type="submit">
+            Search
+          </button>
+          <button class="btn-reset" id="resetSearch" type="submit">
+            Reset
+          </button>
         </form>
       </section>
 
-      <section class="book_shelf-list">
-        <div class="book_shelf-incomplete">
+      <section class="bookshelf_section">
+        <div class="bookshelf-incomplete">
           <h2>In-Progress</h2>
           <p>Total : <span id="incompleteCount">0</span></p>
           <div id="incompleteBookshelfList" class="book_list"></div>
         </div>
-        <div class="book_shelf-complete">
+        <div class="bookshelf-complete">
           <h2>Completed</h2>
-          <p>Total : <span id="completedCount">0</span></p>
+          <p>Total : <span id="completeCount">0</span></p>
           <div id="completeBookshelfList" class="book_list"></div>
         </div>
       </section>
 
-      <section id="modal-edit" class="modal">
-        <div class="modal-content">
-          <div class="modal-body">
-            <h3 class="font-gradient text-center">Edit Buku</h3>
-            <form id="editBook" action="#" class="form">
-              <div class="form-group field-edit-id">
-                <label for="edit-id" class="form-label">id</label>
-                <input
-                  class="form-input"
-                  type="text"
-                  id="edit-id"
-                  name="idbuku"
-                  placeholder="id buku"
-                />
-              </div>
-              <div class="form-group">
-                <label for="edit-judul" class="form-label">Judul</label>
-                <input
-                  class="form-input"
-                  type="text"
-                  id="edit-judul"
-                  name="judul"
-                  placeholder="masukkan judul buku..."
-                />
-              </div>
-              <div class="form-group">
-                <label for="edit-penulis" class="form-label">Penulis</label>
-                <input
-                  class="form-input"
-                  type="text"
-                  id="edit-penulis"
-                  name="penulis"
-                  placeholder="masukkan penulis buku..."
-                />
-              </div>
-              <div class="form-group">
-                <label for="edit-tahun" class="form-label">Tahun</label>
-                <input
-                  class="form-input"
-                  type="number"
-                  id="edit-tahun"
-                  name="tahun"
-                  placeholder="masukkan tahun terbit buku..."
-                />
-              </div>
-              <div class="btn-edit-wrapper">
-                <button type="submit" class="btn-submit">
-                  <i class="fas fa-save"></i> Simpan
-                </button>
-                <button class="btn-cancel">Batal</button>
-              </div>
-            </form>
-          </div>
+      <section class="modal_section">
+        <div class="modal-editbook">
+          <h2>Edit Book</h2>
+          <form id="editBook">
+            <div class="col-edit">
+              <!-- <label for="edit-id">ID</label> -->
+              <input type="text" id="editID" />
+            </div>
+            <div class="col-edit">
+              <label for="editTitle">Title</label>
+              <input id="editTitle" class="row-edit" type="text" name="title" />
+            </div>
+            <div class="col-edit">
+              <label for="editAuthor">Author</label>
+              <input id="editAuthor" class="row-edit" type="text" name="author" />
+            </div>
+            <div class="col-edit">
+              <label for="editYear">Year</label>
+              <input id="editYear" class="row-edit" type="number" name="year" />
+            </div>
+            <div class="btn-wrapper">
+              <button class="btn-submit" type="submit">Save</button>
+              <button class="btn-cancel">Cancel</button>
+            </div>
+          </form>
         </div>
       </section>
-
     </main>
 
+    <script src="/js/storage.js"></script>
+    <script src="/js/dom.js"></script>
     <script src="/js/script.js"></script>
     <script src="/js/button.js"></script>
-    <script src="/js/dom.js"></script>
-    <script src="/js/storage.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   </body>
 </html>

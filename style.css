@@ -8,14 +8,16 @@
       SECTION BOOKSHELF
     MAIN CONTENT
 */
-
 @import url("https://fonts.googleapis.com/css2?family=Maven+Pro:wght@500&display=swap");
 
 :root {
-  --primary-color: #f58840;
-  --secondary-color: #fdf6ec;
   /* https://colorhunt.co/palette/000000f58840b85252eadede */
+  --primary-color: #f58840;
+  --secondary-color: white;
+  --third-color: #3d3d3d;
+  --fourth-color: #b85252;
 }
+
 * {
   padding: 0;
   margin: 0;
@@ -27,11 +29,20 @@ body {
 h2 {
   text-align: center;
   color: var(--primary-color);
+  margin-bottom: 5px;
 }
+h3 {
+  color: var(--third-color);
+  font-weight: bold;
+}
+p {
+  color: var(--primary-color);
+}
+
 /* GLOBAL CSS */
 
 /* HEADER  */
-.head_bar {
+header {
   padding: 10px;
   text-align: center;
   background-color: var(--primary-color);
@@ -42,7 +53,7 @@ h2 {
 /* MAIN CONTENT  */
 main {
   max-width: 1440px;
-  width: 90%;
+  width: 80%;
   margin: 20px auto;
   padding: 0 20px;
   border-radius: 15px;
@@ -66,12 +77,12 @@ main {
   justify-content: space-between;
 }
 .input_section > form > button {
+  width: 100%;
+  padding: 10px 0;
   background-color: var(--primary-color);
   color: var(--secondary-color);
   border: 0;
   border-radius: 5px;
-  width: 100%;
-  padding: 10px;
   cursor: pointer;
 }
 .input_section > form > button > span {
@@ -88,12 +99,12 @@ main {
   color: var(--primary-color);
   font-weight: bolder;
 }
-.input_section > form > .input_inline {
+.input_section > form > .inputStatusBook {
   margin: 15px 0 5px 0;
   display: flex;
   align-items: center;
 }
-.input_section > form > .input_inline > label {
+.input_section > form > .inputStatusBook > label {
   color: var(--primary-color);
   font-weight: bolder;
   margin-right: 10px;
@@ -109,8 +120,7 @@ main {
   margin: 20px 0 0 0;
 }
 .search_section > form {
-  padding: 10px;
-  margin: 5px;
+  margin: 20px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -118,131 +128,125 @@ main {
 .search_section > form > input {
   width: 30%;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 10px;
+  opacity: 0.8;
 }
 .search_section > form > button {
+  color: var(--secondary-color);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.btn-search {
+  background-color: var(--primary-color);
   padding: 0 30px;
   margin: 0 5px;
-  background-color: var(--primary-color);
-  color: white;
-  border: 0;
-  border-radius: 5px;
-  cursor: pointer;
+}
+.btn-reset {
+  background-color: var(--fourth-color);
+  padding: 0 15px;
 }
 /* SECTION SEARCH  */
 
 /* SECTION BOOKSHELF  */
-.book_shelf-list {
+.bookshelf_section {
   display: flex;
 }
-.book_shelf-incomplete,
-.book_shelf-complete {
-  margin: 20px auto;
+.bookshelf-incomplete,
+.bookshelf-complete {
+  margin: 20px 40px;
+  padding: 15px 15px 30px;
   border-radius: 10px;
-  width: 48%;
+  width: 50%;
 }
-.book_shelf > .book_list {
-  padding: 5px;
-}
-.book_shelf > .book_list > .book_item {
-  padding: 8px;
-  border: 1px solid var(--primary-color);
-  border-radius: 5px;
+.book_list .book-item {
+  line-height: 25px;
+  padding: 10px;
   margin: 10px 0;
-}
-.book_shelf > .book_list > .book_item > h3,
-p {
-  margin: 8px 0;
-}
-.book_shelf > .book_list > .book_item > .action > button {
-  border: 0;
-  padding: 5px;
-  margin: 0 5px 0 0;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.book_shelf > .book_list > .book_item > .action > .green {
-  background-color: darkgreen;
-  color: white;
-}
-.book_shelf > .book_list > .book_item > .action > .red {
-  background-color: darkred;
-  color: white;
+  border-radius: 10px;
+  border: 2px solid var(--primary-color);
 }
 .btn-wrapper {
-  padding: 10px 0px;
+  margin-top: 5px;
+  display: flex;
+  justify-content: space-between;
 }
-.check-button {
-  padding: 5px 0;
-  width: 50%;
+.btn {
+  width: 32%;
+  padding: 10px 5px;
   cursor: pointer;
-  background-color: yellow;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
 }
-.undo-button {
-  padding: 5px 0;
-  width: 50%;
-  cursor: pointer;
-  background-color: red;
-}
-.trash-button {
-  color: black;
-  padding: 5px 0;
-  width: 50%;
-  cursor: pointer;
-  background-color: cyan;
-}
-.book-item {
-  border-radius: 16px;
-  margin-top: 16px;
-  padding: 12px 24px 12px 24px;
-  align-items: center;
-  box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05),
-    0 15px 40px rgba(166, 173, 201, 0.2);
-  border: 1px solid lightgray;
-}
-.red-btn {
-  color: white;
-  background-color: red;
-  padding: 5px 10px;
-  margin: 5px 5px;
-  border-radius: 10px;
-}
-.green-btn {
-  color: white;
-  background-color: lightseagreen;
-  padding: 5px 10px;
-  margin: 5px 5px;
-  border-radius: 10px;
-}
-.edit-btn {
+.btn-check {
   background-color: var(--primary-color);
-  color: white;
-  padding: 5px 100px;
-  margin: 5px;
-  border-radius: 10px;
+  color: var(--secondary-color);
 }
-.done-btn {
+.btn-edit {
+  background-color: var(--third-color);
+  color: var(--secondary-color);
+}
+.btn-delete {
+  background-color: var(--fourth-color);
+  color: var(--secondary-color);
+}
+.btn-uncheck {
   background-color: var(--primary-color);
-  color: white;
-  padding: 5px 100px;
-  margin: 5px;
-  border-radius: 10px;
+  color: var(--secondary-color);
 }
-.book-item h1 {
-  margin: 10px;
-}
-.book-item h4 {
-  margin: 10px;
-  padding: 5px 0px;
-}
-.book-item p {
-  margin: 10px;
-  padding: 5px 0px;
-}
-
 /* SECTION BOOKSHELF  */
-/* MAIN CONTENT  */
 
-.overflow {
-  overflow: hidden;
+/* ---Modal Edit--- */
+.btn-submit,
+.btn-cancel {
+  width: 45%;
+  padding: 10px 5px;
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  color: var(--secondary-color);
 }
+.btn-submit {
+  background-color: var(--third-color);
+}
+.btn-cancel {
+  background-color: var(--fourth-color);
+}
+.modal_section {
+  display: none;
+  position: fixed;
+  padding-top: 10%;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Modal Content */
+.modal-editbook {
+  position: relative;
+  background-color: white;
+  max-width: 600px;
+  margin: auto;
+  padding: 10px 50px;
+  border: 3px solid var(--primary-color);
+  border-radius: 5px;
+}
+
+.col-edit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.row-edit {
+  width: 85%;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+}
+/* ---Modal Edit--- */

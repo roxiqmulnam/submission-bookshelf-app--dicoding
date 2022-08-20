@@ -1,123 +1,145 @@
-// ACTION FORM
-document.addEventListener("DOMContentLoaded", function () {
-  // Add a Book Form
-  const submitForm = document.getElementById("inputBook");
-  submitForm.addEventListener("submit", function (e) {
-    encodeURIComponent.preventDefault();
-    addBook();
-  });
-  // Search a Book Form
-  const searchForm = document.getElementById("searchBook");
-  searchForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-    searchBook();
-  });
-  // Edit a Book Form
-  const editForm = document.getElementById("editBook");
-  editForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-    editBook();
-  });
-  function editBook() {
-    const modalEdit = document.getElementById("modal-edit");
-
-    const idBook = document.getElementById("edit-id").value;
-    const judul = document.getElementById("edit-judul").value;
-    const penulis = document.getElementById("edit-penulis").value;
-    const tahun = document.getElementById("edit-tahun").value;
-
-    const bookPosition = findBookIndex(parseInt(idBook));
-
-    books[bookPosition].title = judul;
-    books[bookPosition].author = penulis;
-    books[bookPosition].year = tahun;
-
-    refreshDataFromBooks();
-    modalEdit.style.display = "none";
-    document.body.classList.toggle("overflow");
-
-    updateDataToStorage();
-  }
-  // Cancel to Edit Book
-  document.querySelector(".btn-cancel").addEventListener("click", function (e) {
-    e.preventDefault();
-    document.querySelector("#modal-edit").style.display = "none";
-    document.body.classList.toggle("overflow");
-  });
-  // Load data from local storage
-  if (isStorageExist()) {
-    loadDataFromStorage();
-  }
-});
-// REFRESH ON WEBPAGE WOULDN'T DELETE THE DATA, BECAUSE DATA SAVED FROM LOCAL STORAGE
-document.addEventListener("ondataloaded", () => {
-  refreshDataFromBooks();
-});
-
-// Add Books
 function addBook() {
-  // Get Value Form
   const getTitle = document.getElementById("inputBookTitle").value;
   const getAuthor = document.getElementById("inputBookAuthor").value;
   const getYear = document.getElementById("inputBookYear").value;
   const getStatusBook = document.getElementById("inputBookIsComplete").checked;
-  // Validation Require Value
-  if (getTitle === "" || getAuthor === "" || getYear === "") {
-    alert("Please fillform correctly!");
-    return;
-  }
 
   document.getElementById("inputBookTitle").value = "";
   document.getElementById("inputBookAuthor").value = "";
   document.getElementById("inputBookYear").value = "";
   document.getElementById("inputBookIsComplete").checked = false;
 
-  const setBook = makeBook(getTitle, getAuthor, getYear, getStatusBook);
+  const book = makeBook(getTitle, getAuthor, getYear, getStatusBook);
+  const bookObject = getBookObject(getTitle, getAuthor, getYear, getStatusBook);
 
-  const bookObject = setBookObject(getTitle, getAuthor, getYear, getStatusBook);
-
-  setBook[BOOK_ITEMID] = bookObject.id;
+  book[BOOK_ID] = bookObject.id;
   books.push(bookObject);
 
   let listID;
   if (getStatusBook) {
-    listID = IN_PROGRESS_COUNT;
-    IN_PROGRESS_COUNT++;
+    listID = COMPLETE_BOOKSHELF;
+    COMPLETE_COUNT++;
   } else {
-    listID = COMPLETED_COUNT;
-    COMPLETED_COUNT++;
+    listID = INCOMPLETE_BOOKSHELF;
+    INCOMPLETE_COUNT++;
   }
 
   const listBook = document.getElementById(listID);
 
   listBook.append(book);
+  swal({
+    title: "Book Added!",
+    icon: "success",
+    button: "OK",
+  });
   updateCount();
   updateDataToStorage();
-  showStatusRak();
 }
 
-// after add book create data book to show result
-function makeBook(title, author, year, isCompleted) {
-  // SET VALUE
-  // set title
-  const setTitle = document.createElement("h1");
+function makeBook(title, author, year, statusBook) {
+  const setTitle = document.createElement("h3");
   setTitle.innerText = title;
-  // set author
+  setTitle.classList.add("title");
+
   const setAuthor = document.createElement("p");
-  setAuthor.innerHTML = `Author: <span>${author}</span>`;
-  // set year
+  setAuthor.innerHTML = `Author : <span class='author'>${author} </span>`;
+
   const setYear = document.createElement("p");
-  setYear.innerHTML = `Year: <span>${year}</span>`;
-  // set container button
+  setYear.innerHTML = `Year : <span class='year'>${year} </span>`;
+
   const setButtonContainer = document.createElement("div");
   setButtonContainer.classList.add("btn-wrapper");
-  if (!isCompleted)
-    setButtonContainer.append(ButtonIncomplete(), ButtonDelete());
-  else setButtonContainer.append(ButtonCompleted(), ButtonDelete());
-  // set Container
+
+  if (!statusBook)
+    setButtonContainer.append(
+      createCheckButton(),
+      createEditButton(),
+      createTrashButton()
+    );
+  else
+    setButtonContainer.append(
+      createUndoButton(),
+      createEditButton(),
+      createTrashButton()
+    );
+
   const setContainer = document.createElement("div");
-  setContainer.classList.add("item");
+  setContainer.classList.add("book-item");
+
   setContainer.append(setTitle, setAuthor, setYear, setButtonContainer);
-  // return Container
   return setContainer;
+}
+
+function refreshDataFromBooks() {
+  const incompleteBookshelf = document.getElementById(INCOMPLETE_BOOKSHELF);
+  const completeBookshelf = document.getElementById(COMPLETE_BOOKSHELF);
+
+  incompleteBookshelf.innerHTML = "";
+  completeBookshelf.innerHTML = "";
+
+  COMPLETE_COUNT = 0;
+  INCOMPLETE_COUNT = 0;
+
+  for (book of books) {
+    const newBook = makeBook(
+      book.title,
+      book.author,
+      book.year,
+      book.isCompleted
+    );
+    newBook[BOOK_ID] = book.id;
+
+    if (book.isCompleted) {
+      COMPLETE_COUNT++;
+      completeBookshelf.append(newBook);
+    } else {
+      INCOMPLETE_COUNT++;
+      incompleteBookshelf.append(newBook);
+    }
+  }
+  updateCount();
+}
+
+function searchBook() {
+  const keywords = document.getElementById("searchBookTitle").value.toLowerCase();
+  const incompleteBookshelf = document.getElementById(INCOMPLETE_BOOKSHELF);
+  const completeBookshelf = document.getElementById(COMPLETE_BOOKSHELF);
+
+  incompleteBookshelf.innerHTML = "";
+  completeBookshelf.innerHTML = "";
+
+  if (keywords == "") {
+    refreshDataFromBooks();
+    return;
+  }
+
+  COMPLETE_COUNT = 0;
+  INCOMPLETE_COUNT = 0;
+
+  for (book of books) {
+    [];
+    if (book.title.toLowerCase().includes(keywords)) {
+      const newBook = makeBook(
+        book.title,
+        book.author,
+        book.year,
+        book.isCompleted
+      );
+      newBook[BOOK_ID] = book.id;
+
+      if (book.isCompleted) {
+        COMPLETE_COUNT++;
+        completeBookshelf.append(newBook);
+      } else {
+        INCOMPLETE_COUNT++;
+        incompleteBookshelf.append(newBook);
+      }
+    }
+  }
+  updateCount();
+}
+
+function updateCount() {
+  document.getElementById(INCOMPLETE_COUNT_ID).innerText = INCOMPLETE_COUNT;
+  document.getElementById(COMPLETE_COUNT_ID).innerText = COMPLETE_COUNT;
 }
